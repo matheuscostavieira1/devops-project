@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   test:
@@ -14,13 +14,15 @@ jobs:
       - name: Baixar código
         uses: actions/checkout@v3
 
-      - name: Instalar Node
+      - name: Usar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Instalar dependências
-        run: npm install
+      - name: Limpar cache e instalar dependências
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Rodar testes
-        run: npm test
+        run: npx jest
